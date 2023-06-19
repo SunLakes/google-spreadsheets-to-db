@@ -20,6 +20,8 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -33,11 +35,22 @@ import static ua.mibal.googleSpreadsheetsToDb.utils.GoogleAuthorizeUtil.getCrede
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
+@Component
 public class SpreadSheetsDataOperator {
 
-    public List<List<Object>> getData(final String spreadsheetId,
-                                      final String pageName,
-                                      final String range) throws IOException, GeneralSecurityException {
+    private final String spreadsheetId;
+    private final String pageName;
+    private final String range;
+
+    public SpreadSheetsDataOperator(@Value("${spreadsheetId}") final String spreadsheetId,
+                                    @Value("${pageName}") final String pageName,
+                                    @Value("${dataRange}") final String range) {
+        this.spreadsheetId = spreadsheetId;
+        this.pageName = pageName;
+        this.range = range;
+    }
+
+    public List<List<Object>> getData() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         final String parameter = pageName + "!" + range;
