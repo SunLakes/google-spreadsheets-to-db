@@ -16,6 +16,9 @@
 
 package ua.mibal.googleSpreadsheetsToDb;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ua.mibal.googleSpreadsheetsToDb.components.Application;
+
 /**
  * @author Michael Balakhon
  * @link t.me/mibal_ua
@@ -23,6 +26,11 @@ package ua.mibal.googleSpreadsheetsToDb;
 public class Launcher {
 
     public static void main(String[] args) {
-        // Add code here
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
+                SpringConfig.class
+        );
+        Application application = context.getBean(Application.class);
+        application.start();
+        context.close();
     }
 }
