@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ua.mibal.googleSpreadsheetsToDb;
+package ua.mibal.googleSpreadsheetsToDb.components;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
