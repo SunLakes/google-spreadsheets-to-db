@@ -1,4 +1,4 @@
-# The Google Spreadsheets to DataBase Project
+# The Google Spreadsheets to Database Project
 
 -----------------------------------------------------------------------------------
 
