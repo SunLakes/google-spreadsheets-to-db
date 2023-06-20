@@ -58,14 +58,15 @@ public class SpreadSheetsDataOperator {
 
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
-        final String parameter = pageName + "!" + range;
+        final String pageAndRangeParameter = pageName + "!" + range;
 
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
         ValueRange response = service.spreadsheets().values()
-                .get(spreadsheetId, parameter)
+                .get(spreadsheetId, pageAndRangeParameter)
                 .execute();
+
         return response.getValues();
     }
 }
