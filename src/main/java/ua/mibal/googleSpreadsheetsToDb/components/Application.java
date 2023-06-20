@@ -33,7 +33,7 @@ public class Application {
             List<List<String>> data = spreadSheetsDataOperator.getData();
             databaseOperator.writeData(data);
             Map<Integer, Integer> braceletsData = jsonDataOperator.readBraceletsData();
-//            databaseOperator.writeBraceletsData(braceletsData);
+            databaseOperator.writeBraceletsData(braceletsData);
             databaseOperator.insertBraceletsId();
         } catch (IOException | GeneralSecurityException | SQLException e) {
             throw new RuntimeException(e);

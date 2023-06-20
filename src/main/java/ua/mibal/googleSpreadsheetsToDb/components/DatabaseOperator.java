@@ -95,4 +95,18 @@ public class DatabaseOperator {
             preparedStatement.executeUpdate();
         }
     }
+
+    public void writeBraceletsData(Map<Integer, Integer> braceletsData) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "INSERT INTO bracelets " +
+                "VALUES (?, ?)"
+        );
+        for (Map.Entry<Integer, Integer> pair : braceletsData.entrySet()) {
+            preparedStatement.setInt(1, pair.getKey());
+            preparedStatement.setInt(2, pair.getValue());
+
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+        }
+    }
 }
