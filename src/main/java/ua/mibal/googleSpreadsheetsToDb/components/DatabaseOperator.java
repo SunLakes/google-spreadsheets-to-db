@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +71,28 @@ public class DatabaseOperator {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void insertBraceletsId() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT * FROM bracelets"
+        );
+        while (resultSet.next()) {
+            final int braceletId = resultSet.getInt("bracelet_id");
+            final int personId = resultSet.getInt("person_id");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE people " +
+                    "SET bracelet_id = ? " +
+                    "WHERE id = ?"
+            );
+            preparedStatement.setInt(1, braceletId);
+            preparedStatement.setInt(2, personId);
+
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
         }
     }
 }

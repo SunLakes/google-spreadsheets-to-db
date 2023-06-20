@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -27,7 +28,8 @@ public class Application {
         try {
             List<List<String>> data = spreadSheetsDataOperator.getData();
             databaseOperator.writeData(data);
-        } catch (IOException | GeneralSecurityException e) {
+            databaseOperator.insertBraceletsId();
+        } catch (IOException | GeneralSecurityException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
