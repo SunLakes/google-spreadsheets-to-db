@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class SpringConfig {
 
     @Bean
-    Map<String, Function<List<Object>, Object>> rowNamesValuesMap() {
+    Map<String, Function<List<String>, String>> rowNamesValuesMap() {
         // 20 червня - 1 день
         final Map<String, String> DAY_MAP = Map.of(
                 "20", "1",
@@ -49,34 +49,34 @@ public class SpringConfig {
         );
 
         return new LinkedHashMap<>() {{
-            put("name", row -> row.get(1).toString().trim());
-            put("primary_phone", row -> row.get(2).toString().trim());
-            put("secondary_phone", row -> row.get(7).toString().trim());
+            put("name", row -> row.get(1));
+            put("primary_phone", row -> row.get(2));
+            put("secondary_phone", row -> row.get(7));
             put("available_messenger", row -> {
-                final String val = row.get(6).toString();
+                final String val = row.get(6);
                 return String.join(",",
                         Arrays.stream(val.split(", "))
                                 .map(MESSENGER_MAP::get)
                                 .collect(Collectors.toSet())
                 );
             });
-            put("soc_link", row -> row.get(8).toString().trim());
-            put("city", row -> row.get(10).toString().trim());
+            put("soc_link", row -> row.get(8));
+            put("city", row -> row.get(10));
 //            TODO put("birth_date", row -> String.join("-",
-//                    row.get(9).toString().split("\\.")));
+//                    row.get(9).split("\\.")));
             put("days", row -> {
-                final String val = row.get(12).toString();
+                final String val = row.get(12);
                 return String.join(",",
                         Arrays.stream(val.split(", "))
                                 .map(DAY_MAP::get)
                                 .collect(Collectors.toSet()));
             });
             put("need_tent", row -> {
-                final String val = row.get(11).toString();
+                final String val = row.get(11);
                 return TENT_MAP.get(val);
             });
             put("need_bus", row -> {
-                final String val = row.get(13).toString();
+                final String val = row.get(13);
                 return BUS_MAP.get(val);
             });
         }};

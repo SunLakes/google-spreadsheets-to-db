@@ -50,7 +50,7 @@ public class SpreadSheetsDataOperator {
         this.range = range;
     }
 
-    public List<List<Object>> getData() throws IOException, GeneralSecurityException {
+    public List<List<String>> getData() throws IOException, GeneralSecurityException {
         System.out.println("Taking data" + '\n' +
                            "    spreadsheetId: " + spreadsheetId + '\n' +
                            "    pageName: " + pageName + '\n' +
@@ -67,6 +67,10 @@ public class SpreadSheetsDataOperator {
                 .get(spreadsheetId, pageAndRangeParameter)
                 .execute();
 
-        return response.getValues();
+        return response.getValues().stream()
+                .map(row -> row.stream()
+                        .map(obj -> obj.toString().trim())
+                        .toList()
+                ).toList();
     }
 }

@@ -25,7 +25,7 @@ public class Application {
 
     public void start() {
         try {
-            List<List<Object>> data = spreadSheetsDataOperator.getData();
+            List<List<String>> data = spreadSheetsDataOperator.getData();
             databaseOperator.writeData(data);
         } catch (IOException | GeneralSecurityException e) {
             throw new RuntimeException(e);

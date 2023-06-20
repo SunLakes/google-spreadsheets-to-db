@@ -22,13 +22,13 @@ public class DatabaseOperator {
 
     private final Connection connection;
 
-    private final Map<String, Function<List<Object>, Object>> rowNamesValuesMap;
+    private final Map<String, Function<List<String>, String>> rowNamesValuesMap;
 
     public DatabaseOperator(@Value("${jdbcDriverPackage}") final String jdbcDriverPackage,
                             @Value("${spring.datasource.url}") final String dbUrl,
                             @Value("${spring.datasource.username}") final String user,
                             @Value("${spring.datasource.password}") final String password,
-                            final Map<String, Function<List<Object>, Object>> rowNamesValuesMap) {
+                            final Map<String, Function<List<String>, String>> rowNamesValuesMap) {
         this.rowNamesValuesMap = rowNamesValuesMap;
         try {
             Class.forName(jdbcDriverPackage);
@@ -42,7 +42,7 @@ public class DatabaseOperator {
         }
     }
 
-    public void writeData(List<List<Object>> data) {
+    public void writeData(List<List<String>> data) {
         data.forEach(System.out::println);
         try {
             insertPerson(data);
@@ -51,16 +51,16 @@ public class DatabaseOperator {
         }
     }
 
-    private void insertPerson(List<List<Object>> data) throws SQLException {
+    private void insertPerson(List<List<String>> data) throws SQLException {
         final String insertingRowNames = String.join(", ", rowNamesValuesMap.keySet());
         final String insertingPlaces = "?" + ", ?".repeat(rowNamesValuesMap.size() - 1);
         final String SQL = format(
                 "INSERT INTO people (%s) VALUES (%S)", insertingRowNames, insertingPlaces
         );
-        for (List<Object> row : data) {
+        for (List<String> row : data) {
             int count = 1;
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            for (Function<List<Object>, Object> func : rowNamesValuesMap.values()) {
+            for (Function<List<String>, String> func : rowNamesValuesMap.values()) {
                 preparedStatement.setObject(count++, func.apply(row));
             }
             System.out.println(preparedStatement);
