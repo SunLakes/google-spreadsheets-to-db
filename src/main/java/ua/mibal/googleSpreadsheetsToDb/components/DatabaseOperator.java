@@ -45,13 +45,13 @@ public class DatabaseOperator {
     public void writeData(List<List<String>> data) {
         data.forEach(System.out::println);
         try {
-            insertPerson(data);
+            insertPeople(data);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void insertPerson(List<List<String>> data) throws SQLException {
+    private void insertPeople(List<List<String>> data) throws SQLException {
         final String insertingRowNames = String.join(", ", rowNamesValuesMap.keySet());
         final String insertingPlaces = "?" + ", ?".repeat(rowNamesValuesMap.size() - 1);
         final String SQL = format(
