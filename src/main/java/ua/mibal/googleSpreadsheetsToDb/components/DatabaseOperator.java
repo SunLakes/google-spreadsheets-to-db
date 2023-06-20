@@ -18,15 +18,17 @@ public class DatabaseOperator {
     private final Connection connection;
 
     public DatabaseOperator(@Value("${jdbcDriverPackage}") final String jdbcDriverPackage,
-                            @Value("${dbUrl}") final String dbUrl,
-                            @Value("${user}") final String user,
-                            @Value("${password}") final String password) {
+                            @Value("${spring.datasource.url}") final String dbUrl,
+                            @Value("${spring.datasource.username}") final String user,
+                            @Value("${spring.datasource.password}") final String password) {
+
         try {
             Class.forName(jdbcDriverPackage);
             this.connection = DriverManager.getConnection(
                     dbUrl,
                     user,
-                    password);
+                    password
+            );
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
