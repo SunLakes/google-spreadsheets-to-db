@@ -51,6 +51,11 @@ public class SpreadSheetsDataOperator {
     }
 
     public List<List<Object>> getData() throws IOException, GeneralSecurityException {
+        System.out.println("Taking data" + '\n' +
+                           "    spreadsheetId: " + spreadsheetId + '\n' +
+                           "    pageName: " + pageName + '\n' +
+                           "    dataRange: " + range + '\n');
+
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         final String parameter = pageName + "!" + range;
