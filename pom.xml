@@ -75,6 +75,9 @@
 
         <!-- Spring -->
         <spring.version>6.0.9</spring.version>
+
+        <!-- Jackson -->
+        <jackson-databind.version>2.14.2</jackson-databind.version>
     </properties>
 
     <dependencies>
@@ -121,6 +124,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Jackson dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
     </dependencies>
 

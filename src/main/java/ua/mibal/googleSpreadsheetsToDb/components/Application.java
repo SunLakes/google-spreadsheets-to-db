@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mykhailo Balakhon
@@ -18,16 +19,21 @@ public class Application {
 
     private final DatabaseOperator databaseOperator;
 
+    private final JsonDataOperator jsonDataOperator;
+
     public Application(SpreadSheetsDataOperator spreadSheetsDataOperator,
-                       DatabaseOperator databaseOperator) {
+                       DatabaseOperator databaseOperator, JsonDataOperator jsonDataOperator) {
         this.spreadSheetsDataOperator = spreadSheetsDataOperator;
         this.databaseOperator = databaseOperator;
+        this.jsonDataOperator = jsonDataOperator;
     }
 
     public void start() {
         try {
             List<List<String>> data = spreadSheetsDataOperator.getData();
             databaseOperator.writeData(data);
+            Map<Integer, Integer> braceletsData = jsonDataOperator.readBraceletsData();
+//            databaseOperator.writeBraceletsData(braceletsData);
             databaseOperator.insertBraceletsId();
         } catch (IOException | GeneralSecurityException | SQLException e) {
             throw new RuntimeException(e);
