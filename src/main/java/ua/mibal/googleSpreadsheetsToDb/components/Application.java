@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
 
 /**
  * @author Mykhailo Balakhon
@@ -14,14 +15,18 @@ public class Application {
 
     private final SpreadSheetsDataOperator spreadSheetsDataOperator;
 
-    public Application(SpreadSheetsDataOperator spreadSheetsDataOperator) {
+    private final DatabaseOperator databaseOperator;
+
+    public Application(SpreadSheetsDataOperator spreadSheetsDataOperator,
+                       DatabaseOperator databaseOperator) {
         this.spreadSheetsDataOperator = spreadSheetsDataOperator;
+        this.databaseOperator = databaseOperator;
     }
 
     public void start() {
-        // TODO
         try {
-            System.out.println(spreadSheetsDataOperator.getData());
+            List<List<Object>> data = spreadSheetsDataOperator.getData();
+            databaseOperator.writeData(data);
         } catch (IOException | GeneralSecurityException e) {
             throw new RuntimeException(e);
         }
